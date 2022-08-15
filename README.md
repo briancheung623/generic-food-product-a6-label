@@ -7,11 +7,6 @@
 </tr>
 </table>
 
-![sc8](https://user-images.githubusercontent.com/61366832/184585833-8142f2ef-f454-4719-893d-60a9c862a9ad.png)
-![sc7](https://user-images.githubusercontent.com/61366832/184585848-507bba61-c4d5-4bed-93e3-dcdc1e54b80b.png)
-
-
-
 
 ## Demo (Requires Google Account)
 Suggest to setup in your own Google Account for testing.
@@ -19,6 +14,17 @@ Suggest to setup in your own Google Account for testing.
 
 ## Mobile support
 The application is compatible with various screen sizes and all OS’s.
+
+## How to use
+- Click on the "Choose Product" dropdown box.
+![sc6](https://user-images.githubusercontent.com/61366832/184585855-abd6ac62-62fc-4392-ad73-5f51caefab40.png)
+- Hover to your selections and click to preview.
+![sc8](https://user-images.githubusercontent.com/61366832/184585833-8142f2ef-f454-4719-893d-60a9c862a9ad.png)
+- Choose your desired weight option, and click "Create Label".
+- The script will then generate one google doc and one .pdf. 
+- Make sure to allow pop-up window for this web app in order for browser download.
+![sc7](https://user-images.githubusercontent.com/61366832/184585848-507bba61-c4d5-4bed-93e3-dcdc1e54b80b.png)
+
 
 ## Installation
 - Go to your Google Drive, feel free to create a folder for this project.
