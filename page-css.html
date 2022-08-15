@@ -1,0 +1,611 @@
+<style>
+
+  .material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
+
+#loaderWrapper{
+    background: #00000061;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+.loader {
+    margin: auto;
+    border: 20px solid #f9d4d3;
+    border-radius: 50%;
+    border-top: 20px solid #00966C;
+    width: 100px;
+    height: 100px;
+    animation: spinner 4s ease-out infinite;
+    top: 40%;
+    left: 45%;
+    position: fixed;
+    transform: translate(-50%, -50%);
+}
+
+@keyframes spinner {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+@-webkit-keyframes load2 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes load2 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+*,
+*:before,
+*:after{
+    padding: 0;
+    margin: 0;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+body {
+    height: 100vh;
+    background-image: linear-gradient( 135deg, #38000a, #97495b );
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
+}
+.container{
+    width: 60%;
+    min-width: 340px;
+    position: absolute;
+    margin: auto;
+    top: 2%;
+    left: 0;
+    right: 0;
+    padding: 30px 0;
+    border-radius: 8px;
+}
+.cardTitle{
+    position: inherit;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    padding: 4px;
+}
+.cardTitle span{
+  font-size: 16px;
+  padding-left: 3px;
+    font-weight: bold;
+}
+#topBar{
+  background: #F3C0B9;
+  top: 0;
+  position: absolute;
+  width: 100%;
+}
+#newtask, #orderSelectWrapper{
+    position: relative;
+    display: flow-root;
+    padding: 10px 15px;
+    background-color: #ffffff;
+    border-radius: 5px;
+    margin-top: 40px;
+    -webkit-box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+}
+#newtask input, #orderSelectWrapper input{
+    border-radius: 5px;
+    width: 70%;
+    height: 45px;
+    margin: 5px;
+    font-size: 15px;
+    border: 2px solid #d1d3d4;
+    padding: 12px;
+    color: #111111;
+    font-family: 'Poppins',sans-serif;
+    font-weight: 500;
+    position: relative;
+}
+#newtask .input-field{
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+#newtask input:focus{
+    outline: none;
+    border-color:  #8052EC;
+}
+
+#orderForm{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: nowrap;
+    flex-direction: row;
+}
+
+#buttonWrapper{
+  width: 100%;
+  position: absolute;
+  height:100px;
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+button {
+    position: relative;
+    float: right;
+    width: 40%;
+    height: 45px;
+    border-radius: 5px;
+    font-family: "Poppins",sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    background-color: #50c89a;
+    color: #fff;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+#tasks {
+   width: 100%;
+   position: relative;
+   margin-top: 40px;
+   background-color: #ffffff;
+   -webkit-box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+           box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+   padding: 30px 20px;
+   border-radius: 5px;
+}
+.task {
+    background: #ffffff;
+    height: 50px;
+    padding: 5px 10px;
+    border-radius: 0px;
+    margin-top: 10px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    cursor: pointer;
+    border-bottom: 2px solid #d1d3d4;
+}
+.task button {
+    border: none;
+    background: #01966c;
+    height: 100%;
+    width: 40px;
+    color: #ffffff;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.completed{
+    text-decoration: line-through;
+}
+
+select{
+    display: block;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 20%;
+    height: 30px;
+    border-radius: 5px;
+    font-size: 1.2em;
+    border-color: green;
+}
+
+#orderInput{
+    display: flex;
+    margin-right: 0px;
+    justify-content: unset;
+    position: relative;
+    float: right;
+    width: 70%;
+}
+
+a{
+    display: block;
+    color: #3c763d;
+    font-family: "Poppins",sans-serif;
+    font-weight: 500;
+    position: relative;
+    margin-top: 40px;
+    width: 20%;
+    background-color: #ffffff;
+    border-radius: 5px;
+    /* font-size: 10px; */
+    text-decoration: none;
+    text-align: center;
+    -webkit-box-shadow: 0 15px 30px rgb(0 0 0 / 30%);
+    box-shadow: 0 15px 30px rgb(0 0 0 / 30%);
+}
+a>.fab{
+  color: #FF0000;
+}
+@media screen and (min-width: 451px) {
+  a{
+    font-size: 18px;
+     padding:10px 12px 10px 12px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  a{
+    font-size: 16px;
+     padding: 10px 8px;
+  }
+}
+
+/* ======= Toast message ======== */
+
+#toast {
+  position: fixed;
+  top: 32px;
+  right: 32px;
+  z-index: 999999;
+}
+
+.toast {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 2px;
+  padding: 20px 0;
+  min-width: 400px;
+  max-width: 450px;
+  border-left: 4px solid;
+  box-shadow: 0 5px 8px rgba(0, 0, 0, 0.08);
+  transition: all linear 0.3s;
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(calc(100% + 32px));
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+  }
+}
+
+.toast--success {
+  border-color: #47d864;
+}
+
+.toast--success .toast__icon {
+  color: #47d864;
+}
+
+.toast--info {
+  border-color: #2f86eb;
+}
+
+.toast--info .toast__icon {
+  color: #2f86eb;
+}
+
+.toast--warning {
+  border-color: #ffc021;
+}
+
+.toast--warning .toast__icon {
+  color: #ffc021;
+}
+
+.toast--error {
+  border-color: #ff623d;
+}
+
+.toast--error .toast__icon {
+  color: #ff623d;
+}
+
+.toast + .toast {
+  margin-top: 24px;
+}
+
+.toast__icon {
+  font-size: 24px;
+}
+
+.toast__icon,
+.toast__close {
+  padding: 0 16px;
+}
+
+.toast__body {
+  flex-grow: 1;
+}
+
+.toast__title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+}
+
+.toast__msg {
+  font-size: 14px;
+  color: #888;
+  margin-top: 6px;
+  line-height: 1.5;
+}
+
+.toast__close {
+  font-size: 20px;
+  color: rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+
+/* START TOOLTIP STYLES */
+[tooltip] {
+  position: relative; /* opinion 1 */
+}
+
+/* Applies to all tooltips */
+[tooltip]::before,
+[tooltip]::after {
+  text-transform: none; /* opinion 2 */
+  font-size: .9em; /* opinion 3 */
+  line-height: 1;
+  user-select: none;
+  pointer-events: none;
+  position: absolute;
+  display: none;
+  opacity: 0;
+}
+[tooltip]::before {
+  content: '';
+  border: 5px solid transparent; /* opinion 4 */
+  z-index: 1001; /* absurdity 1 */
+}
+[tooltip]::after {
+  content: attr(tooltip); /* magic! */
+  
+  /* most of the rest of this is opinion */
+  font-family: Helvetica, sans-serif;
+  text-align: center;
+  
+  /* 
+    Let the content set the size of the tooltips 
+    but this will also keep them from being obnoxious
+    */
+  min-width: 3em;
+  max-width: 21em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 1ch 1.5ch;
+  border-radius: .3ch;
+  box-shadow: 0 1em 2em -.5em rgba(0, 0, 0, 0.35);
+  background: #333;
+  color: #fff;
+  z-index: 1000; /* absurdity 2 */
+}
+
+/* Make the tooltips respond to hover */
+[tooltip]:hover::before,
+[tooltip]:hover::after {
+  display: block;
+}
+
+/* don't show empty tooltips */
+[tooltip='']::before,
+[tooltip='']::after {
+  display: none !important;
+}
+
+/* FLOW: UP */
+[tooltip]:not([flow])::before,
+[tooltip][flow^="up"]::before {
+  bottom: 100%;
+  border-bottom-width: 0;
+  border-top-color: #333;
+}
+[tooltip]:not([flow])::after,
+[tooltip][flow^="up"]::after {
+  bottom: calc(100% + 5px);
+}
+[tooltip]:not([flow])::before,
+[tooltip]:not([flow])::after,
+[tooltip][flow^="up"]::before,
+[tooltip][flow^="up"]::after {
+  left: 50%;
+  transform: translate(-50%, -.5em);
+}
+
+/* FLOW: DOWN */
+[tooltip][flow^="down"]::before {
+  top: 100%;
+  border-top-width: 0;
+  border-bottom-color: #333;
+}
+[tooltip][flow^="down"]::after {
+  top: calc(100% + 5px);
+}
+[tooltip][flow^="down"]::before,
+[tooltip][flow^="down"]::after {
+  left: 50%;
+  transform: translate(-50%, .5em);
+}
+
+/* FLOW: LEFT */
+[tooltip][flow^="left"]::before {
+  top: 50%;
+  border-right-width: 0;
+  border-left-color: #333;
+  left: calc(0em - 5px);
+  transform: translate(-.5em, -50%);
+}
+[tooltip][flow^="left"]::after {
+  top: 50%;
+  right: calc(100% + 5px);
+  transform: translate(-.5em, -50%);
+}
+
+/* FLOW: RIGHT */
+[tooltip][flow^="right"]::before {
+  top: 50%;
+  border-left-width: 0;
+  border-right-color: #333;
+  right: calc(0em - 5px);
+  transform: translate(.5em, -50%);
+}
+[tooltip][flow^="right"]::after {
+  top: 50%;
+  left: calc(100% + 5px);
+  transform: translate(.5em, -50%);
+}
+
+/* KEYFRAMES */
+@keyframes tooltips-vert {
+  to {
+    opacity: .9;
+    transform: translate(-50%, 0);
+  }
+}
+
+@keyframes tooltips-horz {
+  to {
+    opacity: .9;
+    transform: translate(0, -50%);
+  }
+}
+
+/* FX All The Things */ 
+[tooltip]:not([flow]):hover::before,
+[tooltip]:not([flow]):hover::after,
+[tooltip][flow^="up"]:hover::before,
+[tooltip][flow^="up"]:hover::after,
+[tooltip][flow^="down"]:hover::before,
+[tooltip][flow^="down"]:hover::after {
+  animation: tooltips-vert 300ms ease-out forwards;
+}
+
+[tooltip][flow^="left"]:hover::before,
+[tooltip][flow^="left"]:hover::after,
+[tooltip][flow^="right"]:hover::before,
+[tooltip][flow^="right"]:hover::after {
+  animation: tooltips-horz 300ms ease-out forwards;
+}
+
+#dropdown {
+width:50%;
+height:200px;
+position:relative;
+margin-top: 20px;
+}
+
+.selectHeader {
+    height: 50px;
+    font-size: 1.2em;
+    width: 100%;
+    background-color: #3F3F3F;
+    color: #fff;
+    cursor: pointer;
+    padding: 0 3px;
+}
+
+#dropdown span {
+display:block;
+background-color:#575757;
+color:#fff;
+cursor:pointer;
+font-size:14px;
+font-weight:400;
+padding:10px;
+}
+
+#dropdown span:hover {
+background-color:#1C7BD2;
+color:#fff;
+}
+
+.drop_down_scroll_container {
+display:none;
+width:100%;
+height:100%;
+overflow:hidden;
+}
+.accept {
+    color: #fff;
+    background-color: #3c763d;
+    border-color: #3c763d;
+}
+.accept:hover{
+    color: #fff;
+    background-color: '1C7BD2';
+}
+
+.modal-footer {
+    padding: 15px;
+    text-align: right;
+    border-top: 1px solid #e5e5e5;
+    display: flex;
+    justify-content: space-between;
+}
+
+.dropdown-subcategory {
+display:none;
+position:absolute;
+top:20px;
+left:100%;
+z-index:100;
+width:100%;
+}
+
+.selected {
+background-color:#1C7BD2!important;
+color:#fff;
+}
+
+.hoveredOver,.clickedOption {
+font-weight:700;
+}
+
+</style>
