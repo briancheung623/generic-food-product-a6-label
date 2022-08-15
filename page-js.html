@@ -1,0 +1,280 @@
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"
+  type="text/javascript"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="https://cdn.jsdelivr.net/gh/loadingio/ldLoader@v1.0.0/dist/ldld.min.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+  // handle a key value being entered by either keyboard or scanner
+var ldld = new ldLoader({
+    root: ".ldld.full",
+    auzoZ: true
+  });
+
+function closeModal(){
+   $('#modal_special').fadeOut(500, function(){
+    $('#modal_special').find('.modal-content').html("");
+   });
+}
+
+function getModalContent(){
+  const code = '<div class="modal-content"><div class="modal-header">' + 
+            '<button type="button" class="close" data-dismiss="modal" onclick="closeModal()">' +
+            '<span aria-hidden="true">×</span><span class="sr-only">Close</span>' +
+            '</button>' +
+            '<h4 class="modal-title" id="myModalLabel">Label Preview</h4></div>' +
+            '<div class="modal-body"></div>' +
+            '<div class="modal-footer">' +
+            '<button type="button" class="btn btn-default" data-dismiss="modal" onclick="closeModal()">Cancel</button>' +
+            '<button type="button" class="btn btn-primary accept ld-ext-right"><span>Create Label</span><div class="ld ldld bare"style="width:1.2em;height:1.2em;float:right"></div></button></div></div>';
+  return code;
+}
+
+function addLoader(){
+    $( "#loader" ).css("display", "block");
+}
+
+function removeLoader(){
+    $( "#loader" ).fadeOut(500, function() {
+      // fadeOut complete. Remove the loading div
+      $( "#loader" ).remove(); 
+  });  
+}
+
+function resetValues() {
+ 
+}
+
+
+
+  function showInfoToast(title, msg) {
+    toast({
+      title: title,
+      message: msg,
+      type: "info",
+      duration: 5000
+    });
+  }
+
+  function showSuccessToast(title, msg) {
+    toast({
+      title: title,
+      message: msg,
+      type: "success",
+      duration: 5000
+    });
+  }
+
+  function showErrorToast(title, msg) {
+    toast({
+      title: title,
+      message: msg,
+      type: "error",
+      duration: 5000
+    });
+  }
+
+  // Toast function
+function toast({ title = "", message = "", type = "info", duration = 3000 }) {
+  const main = document.getElementById("toast");
+  if (main) {
+    const toast = document.createElement("div");
+
+    // // Auto remove toast
+    const autoRemoveId = setTimeout(function () {
+      main.removeChild(toast);
+    }, duration + 1000);
+
+    // Remove toast when clicked
+    toast.onclick = function (e) {
+      if (e.target.closest(".toast__close")) {
+        main.removeChild(toast);
+        clearTimeout(autoRemoveId);
+      }
+    };
+
+    const icons = {
+      success: "<span class=\"material-icons-round\">check_circle</span>",
+      info: "<span class=\"material-icons-round\">info</span>",
+      warning: "<span class=\"material-icons-round\">warning</span>",
+      error: "<span class=\"material-icons-round\">error</span>"
+    };
+    const icon = icons[type];
+    const delay = (duration / 1000).toFixed(2);
+
+    toast.classList.add("toast", `toast--${type}`);
+    toast.style.animation = `slideInLeft ease .3s, fadeOut linear 1s ${delay}s forwards`;
+
+    toast.innerHTML = `
+                    <div class="toast__icon">
+                        ${icon}
+                    </div>
+                    <div class="toast__body">
+                        <h3 class="toast__title">${title}</h3>
+                        <p class="toast__msg">${message}</p>
+                    </div>
+                    <div class="toast__close">
+                        <span class="material-icons-round">close</span>
+                    </div>
+                `;
+    main.appendChild(toast);
+  }
+}
+// new label generated callback function
+function newLabelSuccess(url){
+  // console.log("js: " + url + "");
+  ldld.off();
+  window.open(url+"", '_blank').focus();
+  closeModal();
+}
+
+function initialize(){
+  ldld = new ldLoader({
+    root: ".ldld.full",
+    auzoZ: true
+  });
+
+  // When the header for the custom drop-down is clicked
+    $(".selectHeader").click(function() {
+        // cache the actual dropdown scroll container
+        var dropdown = $(this).parent().find(".drop_down_scroll_container");
+        
+        // Toggle the visibility on click
+        if (dropdown.is(":visible")) {
+            dropdown.slideUp();
+            $(this).parent().find(".dropdown-subcategory").fadeOut();
+            dropdown.find("span").removeClass("highlighted").removeClass("selected");
+        } else {
+            dropdown.slideDown();
+        }
+    });
+
+
+
+	// When a top-level menu item is hovered, decide if its
+	// coorespnding submenu should be visible or hidden
+    $(".drop_down_scroll_container span").hover(
+
+        // hover on
+        function() {
+
+            // Remove the "highlighted class from all other options
+            $(this).parent().find("span").removeClass("highlighted").removeClass("selected");
+            $(this).addClass("highlighted").addClass("selected");
+
+            // Get the index of the hovered span
+            var index = $(this).index();
+
+            // Use the hovered index to reveal the 
+            // dropdown-subcategory of the same index
+            var subcategorydiv = $(this).parent().parent().find(".dropdown-subcategory").eq(index);
+            hideallSubmenusExceptMenuAtIndex($(this).parent().parent(), index);
+            subcategorydiv.slideDown();
+        },
+
+        // hover off
+        function() {
+            if (!$(this).hasClass("highlighted")) {
+                var index = $(this).index();
+                var subcategorydiv = $(this).parent().parent().find(".dropdown-subcategory").eq(index);
+                subcategorydiv.slideUp();
+            }
+    });
+
+	// Hide all submenu items except for the submenu item at _index
+	// This will hide any of the previously opened submenu items
+    function hideallSubmenusExceptMenuAtIndex(formElement, _index) {
+        formElement.find(".dropdown-subcategory").each(
+            function(index) {
+                if (_index != index) {
+                    $(this).hide();
+                }
+            }
+        );
+    }
+
+	// When any menu item is hovered
+    $("span").hover(
+        function() {
+            $(".hoveredOver").text($(this).text());
+        },
+        function() {
+            $(".hoveredOver").text("");
+        }
+    );
+
+
+
+    // When a sub-menu option is clicked
+    $(".dropdown-subcategory span").click(function() {
+        $(".dropdown-subcategory span").removeClass("selected");
+        $(".clickedOption").text($(this).text());
+        $(this).addClass("selected");
+        $(this).parent().parent().find(".selectHeader").text($(this).text());
+        closeDropDown($(this).parent().parent());
+
+        // console.log("clickeeeed " + $(this).text());
+        ldld = new ldLoader({
+            root: ".ldld.full",
+            auzoZ: true
+        });
+        ldld.on();
+        google.script.run.withSuccessHandler(onSuccess).getSingleItem($(this).attr("data-sheet"), $(this).attr("data-code"));
+    });
+
+    function onSuccess(results){
+      showSpecialPlateModal(results);
+      ldld.off();
+    }
+
+    // Close the dropdowns contained in divToSearch
+    function closeDropDown(divToSearch) {
+        divToSearch.find(".drop_down_scroll_container").fadeOut();
+        divToSearch.find(".dropdown-subcategory").fadeOut();
+    };
+	
+    // Populate and Launch the bootstrap Modal Dialog Specialty Plates 
+    function showSpecialPlateModal(item) {
+      var options = item['Net weight'].split('/');
+      var optionServes = item['No. of servings'].split('/');
+
+      var optionCode = '<select id="weight-select">';
+      for (const op in options){
+        optionCode+='<option value='+ op +'>' + options[op] + '</option>';
+      } optionCode+="</select>";
+      
+      
+
+      $('#modal_special').find('.modal-dialog').html(getModalContent());
+      $('#modal_special').find('.modal-body')
+      .html('<h2>' + item['Name'] + '</h2>')
+      .append('<br/>Net Weight: ' + optionCode + '')
+      .append('Servings per weight: <span id="servesText" class="code" style="font-weight: bold;">' + optionServes[0] + '</span><br/>')
+      .append('<br />Short description: <span class="code">' + item['Short description'] + '</span><br/>')
+      .append('<br />How to use: <span class="code">' + item['How to use'] + '</span><br/>')
+      .append('<br />Best in: <span class="code">'    + item['Best in'] + '</span><br/>')
+      .append('<br />Ingredients: <span class="code">' + item['Ingredients'] + '</span><br/>')
+      .append('<br />Allergens: <span class="code">' + item['Allergens'] + '</span><br/>')
+      .append('<br />Country of origin: <span class="code">' + item['Country of origin'] + '</span><br/>')
+      .end().modal('show');
+
+      $('.modal-body').on('change','#weight-select' ,function(){
+        var selected_option_value = $(this).find(":selected").val();
+        
+        $('.modal-body').find('#servesText').html(''+optionServes[selected_option_value]);
+      });
+      
+      // When the modal "Accept" button is pressed
+      $('.accept').on('click', function() {
+        ldld = new ldLoader({root: ".ld"});
+
+        item['Net weight'] = $('#weight-select').find(":selected").text();
+        item['No. of servings'] = $('.modal-body').find('#servesText').text();
+
+        ldld.on();
+        google.script.run.withSuccessHandler(newLabelSuccess).createNewLabel(item);
+      });
+      $('#modal_special').css("display", "block");
+    }
+}
+</script>
