@@ -2,7 +2,7 @@
 <table>
 <tr>
 <td>
- A webapp using Google App Scripts to generate A6 package description labels for food products. It helps small businesses to speed up pick-packing and dispatch.
+ A webapp using Google App Scripts to generate A6 package description labels for food products. Helping eCommerce/Start-up businesses to speed up their order dispatch process.
 </td>
 </tr>
 </table>
