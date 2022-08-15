@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <base target="_top">
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"> -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/loadingio/ldLoader@v1.0.0/dist/ldld.min.css">
+
+  <!-- https://material.io/resources/icons/?style=outline -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Outlined" rel="stylesheet">
+
+  <!-- https://material.io/resources/icons/?style=round -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Round" rel="stylesheet">
+
+  <!-- https://material.io/resources/icons/?style=sharp -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Sharp" rel="stylesheet">
+
+  <!-- https://material.io/resources/icons/?style=twotone -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Two+Tone" rel="stylesheet">
+  <?!= include("page-css"); ?>
+</head>
+
+<body>
+    <div id="topBar">[Insert Your Company Logo]</div>
+    <div class="container">
+        <div id="toast"></div>
+        <div id="orderSelectWrapper">
+          <div class="cardTitle"><span class="material-icons-round md-48">document_scanner</span><span>Choose a product</span></div>
+          <div id="dropdown" class="specialtyPlatesCategories">
+            ...
+          </div>
+          <!-- Insert your Google Drive Label Storage Folder Dir Link-->
+          <a href="https://drive.google.com/drive/folders/1bKfqtEKqs9vW8Qg4e8XvpucHAX-wwTeT?usp=sharing" target="_blank">Go to Label Folder</a>
+        </div>
+        
+    </div>
+
+    <div class="modal fade" id="modal_special" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" onclick="closeModal()">
+              <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+            </button>
+            <h4 class="modal-title" id="myModalLabel">Label Preview</h4>
+          </div>
+          <div class="modal-body">
+            ...
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="closeModal()">Cancel</button>
+            <button type="button" class="btn btn-primary accept ld-ext-right"><span>Create Label</span><div class="ld ldld bare"style="width:1.2em;height:1.2em;float:right"></div></button></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="loaderWrapper">
+      
+    </div>
+    <div class="loader"></div>
+    <div class="ldld full light"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <?!= include("page-js"); ?>
+    <script>
+      function onSuccess(code) {
+      $( ".loader" ).fadeOut(800, function() {
+         $( "#loaderWrapper" ).remove();
+      });  
+
+      $('#dropdown').html(code);
+      initialize();
+    }
+    google.script.run.withSuccessHandler(onSuccess)
+    .loadDropDownElement();
+    </script>
+</body>
+
+
+
+</html>
